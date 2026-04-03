@@ -364,11 +364,11 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    data = request.get_json()
-    company_name = data.get('company_name', 'Empresa')
-    contact_name = data.get('contact_name', '')
-    contact_email = data.get('contact_email', '')
-    answers = data.get('answers', {})
+    company_name = request.form.get('company_name', 'Empresa')
+    contact_name = request.form.get('contact_name', '')
+    contact_email = request.form.get('contact_email', '')
+
+    answers = request.form.to_dict()
 
     try:
         pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
