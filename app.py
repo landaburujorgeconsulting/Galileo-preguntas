@@ -188,6 +188,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import cm
 
+
 def generate_pdf(form_data, company_name, contact_name, contact_email):
 
     buffer = io.BytesIO()
@@ -204,14 +205,25 @@ def generate_pdf(form_data, company_name, contact_name, contact_email):
     styles = getSampleStyleSheet()
     story = []
 
-    story.append(Paragraph("Reporte de Sostenibilidad", styles["Title"]))
+    # CONTENIDO PDF
+    story.append(Paragraph("Informe de Sostenibilidad", styles["Title"]))
     story.append(Spacer(1, 12))
+
     story.append(Paragraph(f"Empresa: {company_name}", styles["Normal"]))
     story.append(Paragraph(f"Contacto: {contact_name}", styles["Normal"]))
     story.append(Paragraph(f"Email: {contact_email}", styles["Normal"]))
 
-    # 🔥 ESTA LINEA CREA EL PDF
+    story.append(Spacer(1, 20))
+
+    for key, value in form_data.items():
+        story.append(Paragraph(f"{key}: {value}", styles["Normal"]))
+
+    # 🔥 ESTA LINEA ERA TU ERROR
     doc.build(story)
+
+    buffer.seek(0)
+
+    return buffer
 
     buffer.seek(0)
     return buffer
