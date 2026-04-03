@@ -17,8 +17,16 @@ import io
 import os
 def upload_to_drive(pdf_bytes, filename):
     SCOPES = ['https://www.googleapis.com/auth/drive']
+import os
+import json
+from google.oauth2 import service_account
 
-    credentials = service_account.Credentials.from_service_account_file(
+credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS'])
+
+credentials = service_account.Credentials.from_service_account_info(
+    credentials_info,
+    scopes=['https://www.googleapis.com/auth/drive']
+)
         'credentials.json', scopes=SCOPES
     )
 
