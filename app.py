@@ -1,3 +1,6 @@
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseUpload
 from flask import Flask, render_template, request, jsonify
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -12,7 +15,33 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.enums import TA_CENTER
 import io
 import os
-from datetime import datetime
+def upload_to_drive(pdf_bytes, filename):
+    SCOPES = ['https://www.googleapis.com/auth/drive']
+
+    credentials = service_account.Credentials.from_service_account_file(
+        'credentials.json', scopes=SCOPES
+    )
+
+    service = build('drive', 'v3', credentials=credentials)
+
+    file_metadata = {
+        'name': filename,
+        'parents': ['14bt4g-fVuxC1EuxijmSBJE9lSWLgyVIz']
+    }
+
+    media = MediaIoBaseUpload(
+        io.BytesIO(pdf_bytes),
+        mimetype='application/pdf'
+    )
+
+    file = service.files().create(
+        body=file_metadata,
+        media_body=media,
+        fields='id'
+    ).execute()
+
+    return file.get('id')
+    from datetime import datetime
 
 app = Flask(__name__)
 
@@ -368,7 +397,8 @@ def submit():
 
     try:
         pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
-        send_email(pdf_bytes, company_name, contact_email)
+        filename = f"diagnostico_{company_name}.pdf"
+upload_to_drive(pdf_bytes, filename)
         return jsonify({'success': True, 'message': 'Diagnostico enviado correctamente.'})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
