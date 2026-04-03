@@ -19,42 +19,8 @@ import os
 from flask import send_file
 import io
 
-return send_file(
-    io.BytesIO(pdf_bytes),
-    as_attachment=True,
-    download_name=filename,
-    mimetype='application/pdf'
-)
-    import os
-    import json
-    import io
-    from google.oauth2 import service_account
-    from googleapiclient.discovery import build
-    from googleapiclient.http import MediaIoBaseUpload
 
-    credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS'])
 
-    credentials = service_account.Credentials.from_service_account_info(
-        credentials_info,
-        scopes=['https://www.googleapis.com/auth/drive']
-    )
-
-    service = build('drive', 'v3', credentials=credentials)
-
-    file_metadata = {
-        'name': filename,
-        'parents': ['1iIgd83JdLFshg3ULBg9GY71MjXn05YO7']
-    }
-
-    media = MediaIoBaseUpload(io.BytesIO(pdf_bytes), mimetype='application/pdf')
-
-    file = service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields='id'
-    ).execute()
-
-    return file.get('id')
     from datetime import datetime
 
 app = Flask(__name__)
@@ -413,9 +379,16 @@ def submit():
         pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
 
         filename = f"diagnostico_{company_name}.pdf"
-        upload_to_drive(pdf_bytes, filename)
 
-        return jsonify({'success': True, 'message': 'Diagnostico guardado correctamente.'})
+        from flask import send_file
+        import io
+
+        return send_file(
+            io.BytesIO(pdf_bytes),
+            as_attachment=True,
+            download_name=filename,
+            mimetype='application/pdf'
+        )
 
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500
