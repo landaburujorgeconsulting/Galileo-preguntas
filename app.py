@@ -35,7 +35,7 @@ def upload_to_drive(pdf_bytes, filename):
 
     file_metadata = {
         'name': filename,
-        'parents': ['14bt4g-fVuxC1EuxijmSBJE9lSWLgyVIz']
+        'parents': ['1iIgd83JdLFshg3ULBg9GY71MjXn05YO7']
     }
 
     media = MediaIoBaseUpload(io.BytesIO(pdf_bytes), mimetype='application/pdf')
