@@ -364,19 +364,23 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    company_name = request.form.get('company_name', 'Empresa')
-    contact_name = request.form.get('contact_name', '')
-    contact_email = request.form.get('contact_email', '')
-
-    answers = request.form.to_dict()
-
     try:
+        # Detecta si viene JSON o FORM
+        if request.is_json:
+            data = request.get_json()
+            company_name = data.get('company_name', 'Empresa')
+            contact_name = data.get('contact_name', '')
+            contact_email = data.get('contact_email', '')
+            answers = data.get('answers', {})
+        else:
+            company_name = request.form.get('company_name', 'Empresa')
+            contact_name = request.form.get('contact_name', '')
+            contact_email = request.form.get('contact_email', '')
+            answers = request.form.to_dict()
+
         pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
 
         filename = f"diagnostico_{company_name}.pdf"
-
-        from flask import send_file
-        import io
 
         return send_file(
             io.BytesIO(pdf_bytes),
@@ -386,7 +390,15 @@ def submit():
         )
 
     except Exception as e:
-        return jsonify({'success': False, 'message': str(e)}), 500
+        print("ERROR REAL:", str(e))  # 👈 esto lo vas a ver en logs
+        return f"Error interno: {str(e)}", 500
+
+        from flask import send_file
+        import io
+
+        )
+
+   
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
