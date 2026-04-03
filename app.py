@@ -399,17 +399,18 @@ def submit():
     contact_name = data.get('contact_name', '')
     contact_email = data.get('contact_email', '')
     answers = data.get('answers', {})
-try:
-    pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
+@app.route('/submit', methods=['POST'])
+def submit():
+    try:
+        pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
 
-    filename = f"diagnostico_{company_name}.pdf"
-    upload_to_drive(pdf_bytes, filename)
+        filename = f"diagnostico_{company_name}.pdf"
+        upload_to_drive(pdf_bytes, filename)
 
-    return jsonify({'success': True, 'message': 'Diagnostico guardado correctamente.'})
+        return jsonify({'success': True, 'message': 'Diagnostico guardado correctamente.'})
 
-except Exception as e:
-    return jsonify({'success': False, 'message': str(e)}), 500
-
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
