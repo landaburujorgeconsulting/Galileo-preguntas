@@ -16,15 +16,18 @@ from reportlab.lib.enums import TA_CENTER
 import io
 import os
 def upload_to_drive(pdf_bytes, filename):
-    SCOPES = ['https://www.googleapis.com/auth/drive']
-import os
-import json
-from google.oauth2 import service_account
-credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS'])
-credentials = service_account.Credentials.from_service_account_info(
-    credentials_info,
-    scopes=['https://www.googleapis.com/auth/drive']
-)
+    import os
+    import json
+    import io
+    from google.oauth2 import service_account
+    from googleapiclient.discovery import build
+    from googleapiclient.http import MediaIoBaseUpload
+
+    credentials_info = json.loads(os.environ['GOOGLE_CREDENTIALS'])
+
+    credentials = service_account.Credentials.from_service_account_info(
+        credentials_info,
+        scopes=['https://www.googleapis.com/auth/drive']
     )
 
     service = build('drive', 'v3', credentials=credentials)
@@ -34,10 +37,7 @@ credentials = service_account.Credentials.from_service_account_info(
         'parents': ['14bt4g-fVuxC1EuxijmSBJE9lSWLgyVIz']
     }
 
-    media = MediaIoBaseUpload(
-        io.BytesIO(pdf_bytes),
-        mimetype='application/pdf'
-    )
+    media = MediaIoBaseUpload(io.BytesIO(pdf_bytes), mimetype='application/pdf')
 
     file = service.files().create(
         body=file_metadata,
