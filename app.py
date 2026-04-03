@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, send_file as flask_send_file
 import io
 from datetime import datetime
 from email.mime.multipart import MIMEMultipart
@@ -182,8 +182,16 @@ SECTIONS = [
 ]
 
 
+import io
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import cm
+
 def generate_pdf(form_data, company_name, contact_name, contact_email):
+
     buffer = io.BytesIO()
+
     doc = SimpleDocTemplate(
         buffer,
         pagesize=A4,
@@ -193,6 +201,20 @@ def generate_pdf(form_data, company_name, contact_name, contact_email):
         bottomMargin=2.5*cm
     )
 
+    styles = getSampleStyleSheet()
+    story = []
+
+    story.append(Paragraph("Reporte de Sostenibilidad", styles["Title"]))
+    story.append(Spacer(1, 12))
+    story.append(Paragraph(f"Empresa: {company_name}", styles["Normal"]))
+    story.append(Paragraph(f"Contacto: {contact_name}", styles["Normal"]))
+    story.append(Paragraph(f"Email: {contact_email}", styles["Normal"]))
+
+    # 🔥 ESTA LINEA CREA EL PDF
+    doc.build(story)
+
+    buffer.seek(0)
+    return buffer
     MILITARY_GREEN = colors.HexColor("#3D5A3E")
     DARK_GREEN = colors.HexColor("#1E3320")
     LIGHT_GREEN = colors.HexColor("#6B8F6B")
@@ -364,34 +386,32 @@ def index():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+
     try:
-        # Detecta si viene JSON o FORM
-        if request.is_json:
-            data = request.get_json()
-            company_name = data.get('company_name', 'Empresa')
-            contact_name = data.get('contact_name', '')
-            contact_email = data.get('contact_email', '')
-            answers = data.get('answers', {})
-        else:
-            company_name = request.form.get('company_name', 'Empresa')
-            contact_name = request.form.get('contact_name', '')
-            contact_email = request.form.get('contact_email', '')
-            answers = request.form.to_dict()
+        data = request.json
 
-        pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
+        company_name = data.get("company_name", "")
+        contact_name = data.get("contact_name", "")
+        contact_email = data.get("contact_email", "")
+        form_data = data.get("answers", {})
 
-        filename = f"diagnostico_{company_name}.pdf"
+        pdf_buffer = generate_pdf(
+            form_data,
+            company_name,
+            contact_name,
+            contact_email
+        )
 
-        return send_file(
-            io.BytesIO(pdf_bytes),
+        return flask_send_file(
+            pdf_buffer,
             as_attachment=True,
-            download_name=filename,
-            mimetype='application/pdf'
+            download_name="diagnostico_sostenibilidad.pdf",
+            mimetype="application/pdf"
         )
 
     except Exception as e:
-        print("ERROR REAL:", str(e))  # 👈 esto lo vas a ver en logs
-        return f"Error interno: {str(e)}", 500
+        print("ERROR REAL:", e)
+        return jsonify({"error": str(e)}), 500
 
 
         import io
