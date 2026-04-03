@@ -10,20 +10,213 @@ from reportlab.lib.units import cm
 app = Flask(__name__)
 
 # =============================
-# EJEMPLO MINIMO DE SECTIONS
-# (dejá el tuyo completo)
-# =============================
+# # ===============================
+# DIAGNOSTICO ESG - SECCIONES
+# ===============================
 
-SECTIONS = [
+    SECTIONS = [
+    
+    # -------------------------------------------------
+    # 1. GOBERNANZA Y ETICA
+    # -------------------------------------------------
     {
-        "id": 1,
-        "title": "Gobernanza",
-        "questions": [
-            {"id": "q1", "text": "Tiene codigo de etica?"}
-        ]
+    "id": 1,
+    "title": "Gobernanza y Ética",
+    "questions": [
+    {"id":"q1","text":"¿Su organización cuenta con un Código de Ética aprobado?"},
+    {"id":"q2","text":"¿Dispone de política antisoborno y anticorrupción?"},
+    {"id":"q3","text":"¿Existe canal de denuncias confidencial?"},
+    {"id":"q4","text":"Casos confirmados de corrupción últimos 3 años"},
+    {"id":"q5","text":"¿Publica informe de sostenibilidad verificado?"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 2. DERECHOS HUMANOS
+    # -------------------------------------------------
+    {
+    "id": 2,
+    "title": "Derechos Humanos y Condiciones Laborales",
+    "questions": [
+    {"id":"q6","text":"¿Cuenta con política de derechos humanos UNGPs?"},
+    {"id":"q7","text":"¿Realiza debida diligencia en DDHH?"},
+    {"id":"q8","text":"¿Garantiza salario digno?"},
+    {"id":"q9","text":"¿Respeta libertad sindical?"},
+    {"id":"q10","text":"¿Previene trabajo infantil y forzoso?"},
+    {"id":"q11","text":"Tasa de rotación anual (%)"},
+    {"id":"q12","text":"Programas de capacitación empleados"},
+    {"id":"q13","text":"Política de no discriminación"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 3. SALUD Y SEGURIDAD
+    # -------------------------------------------------
+    {
+    "id":3,
+    "title":"Salud y Seguridad Ocupacional",
+    "questions":[
+    {"id":"q14","text":"Sistema SST certificado"},
+    {"id":"q15","text":"TRIR y LTIFR último año"},
+    {"id":"q16","text":"Simulacros y bienestar laboral"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 4. CAMBIO CLIMATICO
+    # -------------------------------------------------
+    {
+    "id":4,
+    "title":"Cambio Climático y Energía",
+    "questions":[
+    {"id":"q17","text":"Inventario GEI Alcance 1-2-3"},
+    {"id":"q18","text":"Consumo energético y % renovables"},
+    {"id":"q19","text":"Metas SBTi"},
+    {"id":"q20","text":"Análisis riesgos climáticos"},
+    {"id":"q21","text":"Programa eficiencia energética"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 5. AGUA Y BIODIVERSIDAD
+    # -------------------------------------------------
+    {
+    "id":5,
+    "title":"Agua y Biodiversidad",
+    "questions":[
+    {"id":"q22","text":"Consumo total de agua"},
+    {"id":"q23","text":"Operación en zonas estrés hídrico"},
+    {"id":"q24","text":"Política biodiversidad"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 6. RESIDUOS
+    # -------------------------------------------------
+    {
+    "id":6,
+    "title":"Residuos y Economía Circular",
+    "questions":[
+    {"id":"q25","text":"Toneladas de residuos generados"},
+    {"id":"q26","text":"Estrategia economía circular"},
+    {"id":"q27","text":"Reducción plásticos"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 7. CADENA DE SUMINISTRO
+    # -------------------------------------------------
+    {
+    "id":7,
+    "title":"Cadena de Suministro Sostenible",
+    "questions":[
+    {"id":"q28","text":"Política compras sostenibles"},
+    {"id":"q29","text":"Evaluación ESG proveedores"},
+    {"id":"q30","text":"% compras locales"},
+    {"id":"q31","text":"Auditorías a proveedores"},
+    {"id":"q32","text":"Código conducta proveedores"},
+    {"id":"q33","text":"Programa desarrollo PYME"},
+    {"id":"q34","text":"Cláusulas ESG contractuales"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 8. MINERALES
+    # -------------------------------------------------
+    {
+    "id":8,
+    "title":"Minerales y Materiales Críticos",
+    "questions":[
+    {"id":"q35","text":"Uso minerales conflicto"},
+    {"id":"q36","text":"Trazabilidad materias primas"},
+    {"id":"q37","text":"% material reciclado"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 9. INNOVACION
+    # -------------------------------------------------
+    {
+    "id":9,
+    "title":"Innovación y Productos Sostenibles",
+    "questions":[
+    {"id":"q38","text":"Ecodiseño"},
+    {"id":"q39","text":"% productos certificados"},
+    {"id":"q40","text":"I+D sostenible"},
+    {"id":"q41","text":"Packaging reciclable"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 10. COMUNIDADES
+    # -------------------------------------------------
+    {
+    "id":10,
+    "title":"Comunidades y Valor Social",
+    "questions":[
+    {"id":"q42","text":"Evaluaciones impacto social"},
+    {"id":"q43","text":"Inversión social"},
+    {"id":"q44","text":"Consulta comunidades"},
+    {"id":"q45","text":"Contratación población vulnerable"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 11. CUMPLIMIENTO
+    # -------------------------------------------------
+    {
+    "id":11,
+    "title":"Cumplimiento Legal y Riesgos ESG",
+    "questions":[
+    {"id":"q46","text":"Sanciones regulatorias"},
+    {"id":"q47","text":"Sistema gestión riesgos ESG"},
+    {"id":"q48","text":"Certificaciones ambientales"},
+    {"id":"q49","text":"Permisos ambientales"},
+    {"id":"q50","text":"Ejercicios materialidad"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 12. DIGITALIZACION
+    # -------------------------------------------------
+    {
+    "id":12,
+    "title":"Digitalización y Privacidad",
+    "questions":[
+    {"id":"q51","text":"Seguridad información ISO 27001"},
+    {"id":"q52","text":"Incidentes ciberseguridad"},
+    {"id":"q53","text":"Programa privacidad datos"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 13. FINANZAS SOSTENIBLES
+    # -------------------------------------------------
+    {
+    "id":13,
+    "title":"Finanzas Sostenibles",
+    "questions":[
+    {"id":"q54","text":"Bonos verdes o sostenibles"},
+    {"id":"q55","text":"Pasivos ambientales en estados financieros"},
+    {"id":"q56","text":"Estándares reporte utilizados"},
+    {"id":"q57","text":"Evaluación doble materialidad"}
+    ]
+    },
+    
+    # -------------------------------------------------
+    # 14. ESTRATEGIA ESG
+    # -------------------------------------------------
+{
+    "id":14,
+    "title":"Estrategia y Alta Dirección",
+    "questions":[
+    {"id":"q58","text":"KPIs ESG integrados"},
+    {"id":"q59","text":"Remuneración vinculada ESG"},
+    {"id":"q60","text":"Principal barrera sostenibilidad"}
+    ]
     }
-]
 
+]
 # =============================
 # GENERAR PDF
 # =============================
