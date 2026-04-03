@@ -399,8 +399,7 @@ def submit():
     contact_name = data.get('contact_name', '')
     contact_email = data.get('contact_email', '')
     answers = data.get('answers', {})
-
-  try:
+try:
     pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
 
     filename = f"diagnostico_{company_name}.pdf"
