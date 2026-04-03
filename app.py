@@ -642,7 +642,6 @@ def send_email(pdf_bytes, company_name, contact_email):
     sender_email = os.environ.get("MAIL_USER", "")
     sender_password = os.environ.get("MAIL_PASS", "")
    recipient = os.environ.get("MAIL_RECIPIENT", "nodoconsultoria2015@gmail.com")
-
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = recipient
