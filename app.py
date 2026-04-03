@@ -25,27 +25,30 @@ from reportlab.lib.units import cm
 
 app = Flask(__name__)
 
-# =============================
-# # ===============================
+app = Flask(__name__)
+
+# ===============================
 # DIAGNOSTICO ESG - SECCIONES
 # ===============================
 
-    SECTIONS = [
-    
+SECTIONS = [
+
     # -------------------------------------------------
     # 1. GOBERNANZA Y ETICA
     # -------------------------------------------------
     {
-    "id": 1,
-    "title": "Gobernanza y Ética",
-    "questions": [
-    {"id":"q1","text":"¿Su organización cuenta con un Código de Ética aprobado?"},
-    {"id":"q2","text":"¿Dispone de política antisoborno y anticorrupción?"},
-    {"id":"q3","text":"¿Existe canal de denuncias confidencial?"},
-    {"id":"q4","text":"Casos confirmados de corrupción últimos 3 años"},
-    {"id":"q5","text":"¿Publica informe de sostenibilidad verificado?"}
-    ]
+        "id": 1,
+        "title": "Gobernanza y Ética",
+        "questions": [
+            {"id":"q1","text":"¿Su organización cuenta con un Código de Ética aprobado?"},
+            {"id":"q2","text":"¿Dispone de política antisoborno y anticorrupción?"},
+            {"id":"q3","text":"¿Existe canal de denuncias confidencial?"},
+            {"id":"q4","text":"Casos confirmados de corrupción últimos 3 años"},
+            {"id":"q5","text":"¿Publica informe de sostenibilidad verificado?"}
+        ]
     },
+
+]
     
     # -------------------------------------------------
     # 2. DERECHOS HUMANOS
