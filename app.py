@@ -1,3 +1,19 @@
+SECTIONS = [
+    {
+        "id": 1,
+        "title": "Gobernanza y Ética",
+        "questions": [
+            {
+                "id": "q1",
+                "text": "¿Su organización cuenta con un Código de Ética?"
+            },
+            {
+                "id": "q2",
+                "text": "¿Dispone de política antisoborno?"
+            }
+        ]
+    },
+]
 from flask import Flask, render_template, request, jsonify, send_file
 import io
 from datetime import datetime
