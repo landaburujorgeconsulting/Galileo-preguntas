@@ -1,3 +1,4 @@
+from datetime import datetime
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseUpload
@@ -399,8 +400,7 @@ def submit():
     contact_name = data.get('contact_name', '')
     contact_email = data.get('contact_email', '')
     answers = data.get('answers', {})
-@app.route('/submit', methods=['POST'])
-def submit():
+
     try:
         pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
 
