@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: galileo-esg
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: MAIL_USER
+        sync: false
+      - key: MAIL_PASS
+        sync: false
