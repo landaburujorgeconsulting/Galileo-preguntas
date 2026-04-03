@@ -401,13 +401,15 @@ def submit():
     answers = data.get('answers', {})
 
     try:
-        pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
-        filename = f"diagnostico_{company_name}.pdf"
-upload_to_drive(pdf_bytes, filename)
-        return jsonify({'success': True, 'message': 'Diagnostico enviado correctamente.'})
-    except Exception as e:
-        return jsonify({'success': False, 'message': str(e)}), 500
+    pdf_bytes = generate_pdf(answers, company_name, contact_name, contact_email)
 
+    filename = f"diagnostico_{company_name}.pdf"
+    upload_to_drive(pdf_bytes, filename)
+
+    return jsonify({'success': True, 'message': 'Diagnostico guardado correctamente.'})
+
+except Exception as e:
+    return jsonify({'success': False, 'message': str(e)}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
