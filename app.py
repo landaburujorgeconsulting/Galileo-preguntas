@@ -393,7 +393,7 @@ def submit():
         print("ERROR REAL:", str(e))  # 👈 esto lo vas a ver en logs
         return f"Error interno: {str(e)}", 500
 
-        from flask import send_file
+
         import io
 
        
