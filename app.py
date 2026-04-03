@@ -16,7 +16,15 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.enums import TA_CENTER
 import io
 import os
-def upload_to_drive(pdf_bytes, filename):
+from flask import send_file
+import io
+
+return send_file(
+    io.BytesIO(pdf_bytes),
+    as_attachment=True,
+    download_name=filename,
+    mimetype='application/pdf'
+)
     import os
     import json
     import io
