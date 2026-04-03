@@ -1,9 +1,6 @@
+from flask import Flask, render_template, request, jsonify, send_file
+import io
 from datetime import datetime
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseUpload
-from flask import Flask, render_template, request, jsonify
-import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -14,14 +11,12 @@ from reportlab.lib.units import cm
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib.enums import TA_CENTER
-import io
 import os
-from flask import send_file
-import io
 
 
 
-    from datetime import datetime
+
+from datetime import datetime
 
 app = Flask(__name__)
 
