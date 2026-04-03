@@ -13,7 +13,7 @@ SECTIONS = [
 }
 ]
 },
-]
+
 from flask import Flask, render_template, request, jsonify, send_file
 import io
 from datetime import datetime
@@ -48,7 +48,7 @@ SECTIONS = [
 ]
 },
 
-]
+
 
 # -------------------------------------------------
 # 2. DERECHOS HUMANOS
@@ -235,7 +235,7 @@ SECTIONS = [
 ]
 }
 
-
+]
 # =============================
 # GENERAR PDF
 # =============================
